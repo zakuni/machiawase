@@ -60,3 +60,8 @@ class Coordinates
     @y = y 
   end
 end
+
+if __FILE__ == $0
+  machiawase = Machiawase.new
+  puts machiawase.middle_of(ARGV[0], ARGV[1])
+end
