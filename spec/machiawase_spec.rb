@@ -23,6 +23,23 @@ describe Machiawase do
         @machiawase.send(:centroid, *[coordinates_a, coordinates_b]).should eq([0.5, 0.5])
       end
     end
+    context '(0, 0), (1, 1), (2, 2)' do
+      it 'should be (1, 1)' do
+        coordinates_a = Coordinates.new(0, 0)
+        coordinates_b = Coordinates.new(1, 1)
+        coordinates_c = Coordinates.new(2, 2)
+        @machiawase.send(:centroid, *[coordinates_a, coordinates_b, coordinates_c]).should eq([1, 1])
+      end
+    end
+    context '(0, 0), (2, 0), (2, 2), (0, 2)' do
+      it 'should be (1, 1)' do
+        coordinates_a = Coordinates.new(0, 0)
+        coordinates_b = Coordinates.new(2, 0)
+        coordinates_c = Coordinates.new(2, 2)
+        coordinates_d = Coordinates.new(0, 2)
+        @machiawase.send(:centroid, *[coordinates_a, coordinates_b, coordinates_c, coordinates_d]).should eq([1, 1])
+      end
+    end
   end
 
   describe ':place_name' do
