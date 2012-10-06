@@ -14,7 +14,8 @@ class Machiawase
       @coordinates.push(Coordinates.new(lat_lng[0], lat_lng[1]))
     end
 
-    centroid(*@coordinates)
+    lat_lon = centroid(*@coordinates)
+    place_name(lat_lon[0], lat_lon[1])
   end
 
 
