@@ -1,6 +1,6 @@
 # Machiawase
 
-TODO: Write a gem description
+Provides command line usage and library to get a middle point of plural points.
 
 ## Installation
 
@@ -19,6 +19,14 @@ Or install it yourself as:
 ## Usage
 
     $ machiawase PLACE_A PLACE_B
+    
+e.g.
+
+    $ machiawase London Berlin
+    
+or
+    
+    $ machiawase 横浜 東京 川崎
 
 ## Contributing
 
