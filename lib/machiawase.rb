@@ -16,7 +16,11 @@ class Machiawase
     end
 
     lat_lon = centroid(*@coordinates)
-    place_name(lat_lon[0], lat_lon[1])
+    print JSON.pretty_generate(
+                    {"address" => place_name(lat_lon[0], lat_lon[1]),
+                    "latitude" => lat_lon[0],
+                    "longtitude" => lat_lon[1]}
+                    )
   end
 
 
@@ -47,8 +51,12 @@ class Machiawase
   end
 
   def place_name(lat, lon)
-    doc = Hpricot(open("http://nishioka.sakura.ne.jp/google/ws.php?lat=#{lat}&lon=#{lon}&format=simple"))
-    address = doc.at(:address).inner_text
+    begin
+      doc = Hpricot(open("http://nishioka.sakura.ne.jp/google/ws.php?lat=#{lat}&lon=#{lon}&format=simple"))
+      address = doc.at(:address).inner_text
+    rescue
+      address = "Service Temporary Unavalilabe"
+    end
   end
 
 end
@@ -60,9 +68,4 @@ class Coordinates
     @x = x 
     @y = y 
   end
-end
-
-if __FILE__ == $0
-  machiawase = Machiawase.new
-  puts machiawase.middle_of(ARGV[0], ARGV[1])
 end
