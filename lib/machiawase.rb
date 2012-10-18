@@ -55,7 +55,7 @@ class Machiawase
       doc = Hpricot(open("http://nishioka.sakura.ne.jp/google/ws.php?lat=#{lat}&lon=#{lon}&format=simple"))
       address = doc.at(:address).inner_text
     rescue
-      address = "Service Temporary Unavalilabe"
+      address = "Service Temporary Unavailable"
     end
   end
 
