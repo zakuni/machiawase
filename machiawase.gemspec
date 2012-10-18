@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Machiawase::VERSION
 
+  gem.add_dependency "hpricot"
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "ZenTest"
   gem.add_development_dependency "autotest-fsevent"
