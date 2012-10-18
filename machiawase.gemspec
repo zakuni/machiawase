@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["kunio038@gmail.com"]
   gem.description   = %q{provides command line usage and library to get a middle point of plural points}
   gem.summary       = %q{finds a middle point of plural points}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/zakuni/machiawase"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
