@@ -16,11 +16,11 @@ class Machiawase
     end
 
     lat_lon = centroid(*@coordinates)
-    print JSON.pretty_generate(
-                    {"address" => place_name(lat_lon[0], lat_lon[1]),
-                    "latitude" => lat_lon[0],
-                    "longtitude" => lat_lon[1]}
-                    )
+    JSON.pretty_generate(
+                         {"address" => place_name(lat_lon[0], lat_lon[1]),
+                           "latitude" => lat_lon[0],
+                           "longtitude" => lat_lon[1]}
+                         )
   end
 
 
