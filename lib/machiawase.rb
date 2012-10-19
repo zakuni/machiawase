@@ -8,19 +8,30 @@ require 'open-uri'
 
 class Machiawase 
   def middle_of(*spots)
+    @spots_coordinates = Hash.new
     @coordinates = Array.new
     
     spots.each do |spot|
       lat_lng = geocode(spot)
+      @spots_coordinates.store(spot, lat_lng)
       @coordinates.push(Coordinates.new(lat_lng[0], lat_lng[1]))
     end
 
     lat_lon = centroid(*@coordinates)
-    JSON.pretty_generate(
-                         {"address" => place_name(lat_lon[0], lat_lon[1]),
-                           "latitude" => lat_lon[0],
-                           "longtitude" => lat_lon[1]}
-                         )
+    result = Hash.new
+    @spots_coordinates.each do |spot, coordinates|
+      result.store(spot, 
+                   {"latitude" => coordinates[0],
+                     "longtitude" => coordinates[1],
+                     "address" => place_name(coordinates[0], coordinates[1])
+                   })
+    end
+    result.store("result", 
+                 {"latitude" => lat_lon[0],
+                   "longtitude" => lat_lon[1],
+                   "address" => place_name(lat_lon[0], lat_lon[1])
+                 })
+    JSON.pretty_generate(result)
   end
 
 
