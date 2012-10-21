@@ -3,7 +3,7 @@
 require 'machiawase/version'
 require 'net/http'
 require 'json'
-require 'hpricot'
+require 'nokogiri'
 require 'open-uri'
 
 class Machiawase 
@@ -72,8 +72,8 @@ class Machiawase
 
   def place_name(lat, lon)
     begin
-      doc = Hpricot(open("http://nishioka.sakura.ne.jp/google/ws.php?lat=#{lat}&lon=#{lon}&format=simple"))
-      address = doc.at(:address).inner_text
+      doc = Nokogiri::HTML(open("http://nishioka.sakura.ne.jp/google/ws.php?lat=#{lat}&lon=#{lon}&format=simple"))
+      address = doc.xpath('//address')[0].content
     rescue
       address = "Service Temporary Unavailable"
     end
