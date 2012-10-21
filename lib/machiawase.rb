@@ -7,6 +7,15 @@ require 'hpricot'
 require 'open-uri'
 
 class Machiawase 
+  class Coordinates
+    attr :x, :y
+
+    def initialize(x, y)
+      @x = x 
+      @y = y 
+    end
+  end
+
   def middle_of(*spots)
     @spots_coordinates = Hash.new
     @coordinates = Array.new
@@ -70,13 +79,4 @@ class Machiawase
     end
   end
 
-end
-
-class Coordinates
-  attr :x, :y
-
-  def initialize(x, y)
-    @x = x 
-    @y = y 
-  end
 end
