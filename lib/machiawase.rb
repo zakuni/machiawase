@@ -32,17 +32,22 @@ class Machiawase
       result.store(spot, 
                    {"latitude" => coordinates[0],
                      "longtitude" => coordinates[1],
-                     "address" => place_name(coordinates[0], coordinates[1])
+                     "address" => address(coordinates[0], coordinates[1])
                    })
     end
     result.store("result", 
                  {"latitude" => lat_lon[0],
                    "longtitude" => lat_lon[1],
-                   "address" => place_name(lat_lon[0], lat_lon[1])
+                   "address" => address(lat_lon[0], lat_lon[1])
                  })
     JSON.pretty_generate(result)
   end
 
+  def near_station(coordinates)
+    reqUrl = "http://express.heartrails.com/api/json?method=getStations&x=#{coordinates.x}&y=#{coordinates.y}"
+    response = Net::HTTP.get_response(URI.parse(reqUrl))
+    status = JSON.parse(response.body)
+  end
 
   private
 
@@ -70,7 +75,7 @@ class Machiawase
     [@x_sum/coordinates.length.to_f, @y_sum/coordinates.length.to_f]
   end
 
-  def place_name(lat, lon)
+  def address(lat, lon)
     begin
       doc = Nokogiri::HTML(open("http://nishioka.sakura.ne.jp/google/ws.php?lat=#{lat}&lon=#{lon}&format=simple"))
       address = doc.xpath('//address')[0].content

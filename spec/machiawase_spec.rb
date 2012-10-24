@@ -42,10 +42,10 @@ describe Machiawase do
     end
   end
 
-  describe ':place_name' do
+  describe ':address' do
     context '35.4437078, 139.6380256' do
       it 'should be 神奈川県横浜市中区真砂町一丁目1' do
-        @machiawase.send(:place_name, 35.4437078, 139.6380256).should eq ("神奈川県横浜市中区真砂町一丁目1")
+        @machiawase.send(:address, 35.4437078, 139.6380256).should eq ("神奈川県横浜市中区真砂町一丁目1")
       end
     end
   end
@@ -54,6 +54,15 @@ describe Machiawase do
     context '横浜, 東京' do
       it 'should be middle' do
         @machiawase.middle_of("横浜", "東京")
+      end
+    end
+  end
+
+  describe 'near_station' do
+    context '横浜' do
+      it 'should be 横浜' do
+        c = Machiawase::Coordinates.new(35.4437978, 139.6380256)
+        @machiawase.near_station(c).should eq ("横浜")
       end
     end
   end
