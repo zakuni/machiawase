@@ -2,15 +2,43 @@
 # -*- coding: utf-8 -*-
 require 'machiawase'
 
+
+describe Machiawase::Place do
+  describe ':address' do
+    context '35.4437078, 139.6380256' do
+      it 'should be 神奈川県横浜市中区真砂町1丁目9' do
+        Machiawase::Place.new(35.4437078, 139.6380256).address.should eq("神奈川県横浜市中区真砂町1丁目9")
+      end
+    end
+  end
+
+  describe 'geocode' do
+    context '横浜' do
+      it 'should be {lat => 35.4437978, lon => 139.6380256}' do
+        Machiawase::Place.geocode('横浜').should eq ({"lat" => 35.4437078, "lon" => 139.6380256})
+      end
+    end
+  end
+
+  describe 'near_station' do
+    context '横浜' do
+      it 'should be 関内駅' do
+        Machiawase::Place.new(35.4437978, 139.6380256).near_station.should eq ("関内駅")
+      end
+    end
+  end
+end
+
 describe Machiawase do
   before do
     @machiawase = Machiawase.new
   end
 
-  describe ":geocode" do
-    context '横浜' do
-      it 'should be 35.4437978, 139.6380256' do
-        @machiawase.send(:geocode, "横浜").should eq([35.4437078, 139.6380256])
+  describe 'middle_of' do
+    context '横浜, 東京' do
+      it 'should be Place' do
+        m = @machiawase.middle_of("横浜", "東京")
+        @machiawase.middle_of("横浜", "東京").class.should eq(Machiawase::Place)
       end
     end
   end
@@ -18,51 +46,26 @@ describe Machiawase do
   describe ":centroid" do
     context '(0, 0), (1, 1)' do
       it 'should be (0.5, 0.5)' do
-        coordinates_a = Machiawase::Coordinates.new(0, 0)
-        coordinates_b = Machiawase::Coordinates.new(1, 1)
-        @machiawase.send(:centroid, *[coordinates_a, coordinates_b]).should eq([0.5, 0.5])
+        place_a = Machiawase::Place.new(0, 0)
+        place_b = Machiawase::Place.new(1, 1)
+        @machiawase.send(:centroid, *[place_a, place_b]).should eq([0.5, 0.5])
       end
     end
     context '(0, 0), (1, 1), (2, 2)' do
       it 'should be (1, 1)' do
-        coordinates_a = Machiawase::Coordinates.new(0, 0)
-        coordinates_b = Machiawase::Coordinates.new(1, 1)
-        coordinates_c = Machiawase::Coordinates.new(2, 2)
-        @machiawase.send(:centroid, *[coordinates_a, coordinates_b, coordinates_c]).should eq([1, 1])
+        place_a = Machiawase::Place.new(0, 0)
+        place_b = Machiawase::Place.new(1, 1)
+        place_c = Machiawase::Place.new(2, 2)
+        @machiawase.send(:centroid, *[place_a, place_b, place_c]).should eq([1, 1])
       end
     end
     context '(0, 0), (2, 0), (2, 2), (0, 2)' do
       it 'should be (1, 1)' do
-        coordinates_a = Machiawase::Coordinates.new(0, 0)
-        coordinates_b = Machiawase::Coordinates.new(2, 0)
-        coordinates_c = Machiawase::Coordinates.new(2, 2)
-        coordinates_d = Machiawase::Coordinates.new(0, 2)
-        @machiawase.send(:centroid, *[coordinates_a, coordinates_b, coordinates_c, coordinates_d]).should eq([1, 1])
-      end
-    end
-  end
-
-  describe ':address' do
-    context '35.4437078, 139.6380256' do
-      it 'should be 神奈川県横浜市中区真砂町一丁目1' do
-        @machiawase.send(:address, 35.4437078, 139.6380256).should eq ("神奈川県横浜市中区真砂町一丁目1")
-      end
-    end
-  end
-
-  describe 'middle_of' do
-    context '横浜, 東京' do
-      it 'should be middle' do
-        @machiawase.middle_of("横浜", "東京")
-      end
-    end
-  end
-
-  describe 'near_station' do
-    context '横浜' do
-      it 'should be 横浜' do
-        c = Machiawase::Coordinates.new(35.4437978, 139.6380256)
-        @machiawase.near_station(c).should eq ("横浜")
+        place_a = Machiawase::Place.new(0, 0)
+        place_b = Machiawase::Place.new(2, 0)
+        place_c = Machiawase::Place.new(2, 2)
+        place_d = Machiawase::Place.new(0, 2)
+        @machiawase.send(:centroid, *[place_a, place_b, place_c, place_d]).should eq([1, 1])
       end
     end
   end
