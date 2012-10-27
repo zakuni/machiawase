@@ -14,23 +14,40 @@ class Machiawase
   end
 
   class Place
-    attr :lat, :lon
+    attr_reader :address, :near_station
+    attr_accessor :lat, :lon
 
     def initialize(lat, lon)
-      @lat = lat 
-      @lon = lon 
-      @doc = nil
+      @lat          = lat 
+      @lon          = lon 
+      @doc          = nil
+      @address      = nil
+      @near_station = nil
+    end
+
+    def lat=(val)
+      @lat          = val
+      @doc          = nil
+      @address      = nil
+      @near_station = nil
+    end
+
+    def lon=(val)
+      @lon          = val
+      @doc          = nil
+      @address      = nil
+      @near_station = nil
     end
 
     def self.geocode(address)
-      address = URI.encode(address)
-      hash = Hash.new
-      baseUrl = "http://maps.google.com/maps/api/geocode/json"
-      reqUrl = "#{baseUrl}?address=#{address}&sensor=false&language=ja"
+      address  = URI.encode(address)
+      hash     = Hash.new
+      baseUrl  = "http://maps.google.com/maps/api/geocode/json"
+      reqUrl   = "#{baseUrl}?address=#{address}&sensor=false&language=ja"
       response = Net::HTTP.get_response(URI.parse(reqUrl))
-      status = JSON.parse(response.body)
-      lat = status['results'][0]['geometry']['location']['lat']
-      lon = status['results'][0]['geometry']['location']['lng']
+      status   = JSON.parse(response.body)
+      lat      = status['results'][0]['geometry']['location']['lat']
+      lon      = status['results'][0]['geometry']['location']['lng']
       {"lat" => lat, "lon" => lon}
     end
 
@@ -54,9 +71,9 @@ class Machiawase
 
     def to_json
       JSON.pretty_generate({
-                             "latitude" => @lat,
-                             "longtitude" => @lon,
-                             "address" => address,
+                             "latitude"     => @lat,
+                             "longtitude"   => @lon,
+                             "address"      => address,
                              "near_station" => near_station
                            })
     end
