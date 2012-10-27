@@ -55,13 +55,17 @@ class Machiawase
       end
     end
 
+    def to_h
+      {
+        "latitude"     => @lat,
+        "longtitude"   => @lon,
+        "address"      => address,
+        "near_station" => near_station
+      }
+    end
+
     def to_json
-      JSON.pretty_generate({
-                             "latitude"     => @lat,
-                             "longtitude"   => @lon,
-                             "address"      => address,
-                             "near_station" => near_station
-                           })
+      JSON.pretty_generate(to_h)
     end
   end
 end
