@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
-
 require 'rubygems'
 require 'machiawase'
 
-machiawase = Machiawase.new
-puts machiawase.middle_of(ARGV[0], ARGV[1]).address
+puts Machiawase.where?(ARGV).address

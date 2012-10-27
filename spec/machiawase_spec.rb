@@ -34,11 +34,10 @@ describe Machiawase do
     @machiawase = Machiawase.new
   end
 
-  describe 'middle_of' do
+  describe 'where?' do
     context '横浜, 東京' do
       it 'should be Place' do
-        m = @machiawase.middle_of("横浜", "東京")
-        @machiawase.middle_of("横浜", "東京").class.should eq(Machiawase::Place)
+        Machiawase.where?("横浜", "東京").class.should eq(Machiawase::Place)
       end
     end
   end
@@ -66,6 +65,20 @@ describe Machiawase do
         place_c = Machiawase::Place.new(2, 2)
         place_d = Machiawase::Place.new(0, 2)
         @machiawase.send(:centroid, *[place_a, place_b, place_c, place_d]).should eq([1, 1])
+      end
+    end
+  end
+
+  describe ':middle_of' do
+    context '横浜, 東京' do
+      it 'should be Place' do
+        g1 = Machiawase::Place.geocode("横浜")
+        p1 = Machiawase::Place.new(g1['lat'], g1['lon'])
+        
+        g2 = Machiawase::Place.geocode("東京")
+        p2 = Machiawase::Place.new(g2['lat'], g2['lon'])
+        
+        @machiawase.send(:middle_of, p1, p2).class.should eq(Machiawase::Place)
       end
     end
   end
