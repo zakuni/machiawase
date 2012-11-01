@@ -46,7 +46,7 @@ class Machiawase
 
   def near_station
     @place ||= middle_of(*@places)
-    @place.address
+    @place.near_station
   end
 
   def to_h
