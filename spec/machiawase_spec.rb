@@ -31,7 +31,7 @@ end
 
 describe Machiawase do
   before do
-    @machiawase = Machiawase.new
+    @machiawase = Machiawase::Rendezvous.new
   end
 
   describe 'where?' do

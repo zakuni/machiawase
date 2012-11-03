@@ -1,4 +1,4 @@
-class Machiawase
+module Machiawase
   class Place
     attr_reader :address, :near_station
     attr_accessor :lat, :lon
