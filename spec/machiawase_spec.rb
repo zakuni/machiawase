@@ -2,6 +2,17 @@
 # -*- coding: utf-8 -*-
 require 'machiawase'
 
+describe Machiawase do
+
+  describe 'where' do
+    context '横浜, 東京' do
+      it 'should be Place' do
+        Machiawase.where("横浜", "東京").class.should eq(Machiawase::Place)
+      end
+    end
+  end
+
+end
 
 describe Machiawase::Place do
   describe ':address' do
@@ -29,17 +40,9 @@ describe Machiawase::Place do
   end
 end
 
-describe Machiawase do
+describe Machiawase::Rendezvous do
   before do
     @machiawase = Machiawase::Rendezvous.new
-  end
-
-  describe 'where?' do
-    context '横浜, 東京' do
-      it 'should be Place' do
-        Machiawase.where?("横浜", "東京").class.should eq(Machiawase::Place)
-      end
-    end
   end
 
   describe ":centroid" do

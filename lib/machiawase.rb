@@ -8,7 +8,14 @@ require 'machiawase/place'
 require 'machiawase/version'
 
 module Machiawase
-  def self.where?(*addresses)
+
+  def self.where(*argv)
+    require 'optparse'
+    opt = OptionParser.new do |opt|
+      opt.version = VERSION
+    end
+    addresses = opt.parse(argv)
+
     places = Array.new
     addresses.each do |address|
       g = Place.geocode(address)

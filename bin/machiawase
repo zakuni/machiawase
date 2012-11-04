@@ -3,4 +3,4 @@
 require 'rubygems'
 require 'machiawase'
 
-puts Machiawase.where?(ARGV).address
+puts Machiawase.where(*ARGV).address
