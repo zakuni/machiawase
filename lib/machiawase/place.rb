@@ -1,14 +1,15 @@
 module Machiawase
   class Place
-    attr_reader :address, :near_station
+    attr_reader :address, :near_station, :google_map_url
     attr_accessor :lat, :lon
 
     def initialize(lat, lon)
-      @lat          = lat 
-      @lon          = lon 
-      @doc          = nil
-      @address      = nil
-      @near_station = nil
+      @lat            = lat 
+      @lon            = lon 
+      @doc            = nil
+      @address        = nil
+      @near_station   = nil
+      @google_map_url = "http://maps.google.co.jp/maps?q=#{@lat},#{@lon}&ll=#{@lat},#{@lon}&z=14&t=m&brcurrent=3,0x0:0x0,1"
     end
 
     def lat=(val)
