@@ -61,7 +61,7 @@ module Machiawase
         "latitude"     => @lat,
         "longtitude"   => @lon,
         "address"      => address,
-        "near_station" => near_station
+        "near_station" => near_station,
         "google_map"   => @google_map_url
       }
     end
