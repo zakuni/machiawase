@@ -7,6 +7,7 @@ require 'open-uri'
 require 'machiawase/place'
 require 'machiawase/version'
 
+# @author {https://github.com/zakuni zakuni}
 module Machiawase
 
   def self.where(*argv)
@@ -57,6 +58,7 @@ module Machiawase
       @place.near_station
     end
 
+    # Returns attributes with Hash format.
     def to_h
       h = Hash.new
       @places.each_with_index do |place, i|
@@ -67,6 +69,7 @@ module Machiawase
       h.store("machiawase", @place.to_h)
     end
 
+    # Returns attributes with JSON format.
     def to_json
       JSON.pretty_generate(to_h)
     end

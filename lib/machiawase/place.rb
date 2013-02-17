@@ -26,9 +26,9 @@ module Machiawase
       @near_station = nil
     end
 
+    # @return [Hash] geocode of given address.
     def self.geocode(address)
       address  = URI.encode(address)
-      hash     = Hash.new
       baseUrl  = "http://maps.google.com/maps/api/geocode/json"
       reqUrl   = "#{baseUrl}?address=#{address}&sensor=false&language=ja"
       response = Net::HTTP.get_response(URI.parse(reqUrl))
@@ -37,7 +37,8 @@ module Machiawase
       lon      = status['results'][0]['geometry']['location']['lng']
       {"lat" => lat, "lon" => lon}
     end
-
+    
+    # @return [String] the address.
     def address
       begin
         @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}"))
@@ -47,6 +48,7 @@ module Machiawase
       end
     end
 
+    # @return [String] the nearest station.
     def near_station
       begin
         @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}"))
@@ -56,18 +58,18 @@ module Machiawase
       end
     end
     
-    # Returns attributes with Hash format.
+    # @return [Hash] attributes with Hash format.
     def to_h
       {
         "latitude"     => @lat,
-        "longitude"   => @lon,
+        "longitude"    => @lon,
         "address"      => address,
         "near_station" => near_station,
         "google_map"   => @google_map_url
       }
     end
 
-    # Returns attributes with JSON format.
+    # @return [JSON] attributes with JSON format.
     def to_json
       JSON.pretty_generate(to_h)
     end
