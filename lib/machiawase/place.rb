@@ -55,17 +55,19 @@ module Machiawase
         "Service Temporary Unavailable"
       end
     end
-
+    
+    # Returns attributes with Hash format.
     def to_h
       {
         "latitude"     => @lat,
-        "longtitude"   => @lon,
+        "longitude"   => @lon,
         "address"      => address,
         "near_station" => near_station,
         "google_map"   => @google_map_url
       }
     end
 
+    # Returns attributes with JSON format.
     def to_json
       JSON.pretty_generate(to_h)
     end
