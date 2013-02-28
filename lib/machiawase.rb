@@ -10,6 +10,8 @@ require 'machiawase/version'
 # @author {https://github.com/zakuni zakuni}
 module Machiawase
 
+  # @param argv [Array<Place>] the array of places.
+  # @return [Place] the place to rendezvous.
   def self.where(*argv)
     require 'optparse'
     opt = OptionParser.new do |opt|
@@ -27,8 +29,15 @@ module Machiawase
   end
 
   class Rendezvous
-    attr_reader :place, :places, :lat, :lon, :address, :near_station
+    # @!attribute [r] place
+    #   @return [Place] the place to rendezvous.
+    # @!attribute [r] places
+    #   @return [Array<Place>] the array of given places.
+    #   @see Place
 
+    attr_reader :place, :places, :lat, :lon, :address, :near_station
+    
+    # @param places [Array<Place>] the array of places. 
     def initialize(*places)
       @place  = nil
       @places = places
@@ -58,7 +67,7 @@ module Machiawase
       @place.near_station
     end
 
-    # Returns attributes with Hash format.
+    # @return [Hash] the attributes with Hash format.
     def to_h
       h = Hash.new
       @places.each_with_index do |place, i|
@@ -69,7 +78,7 @@ module Machiawase
       h.store("machiawase", @place.to_h)
     end
 
-    # Returns attributes with JSON format.
+    # @return [JSON] the attributes with JSON format.
     def to_json
       JSON.pretty_generate(to_h)
     end

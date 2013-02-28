@@ -1,4 +1,15 @@
 module Machiawase
+
+  # @!attribute [r] address
+  #   @return [String] the address.
+  # @!attribute [r] near_station
+  #   @return [String] the nearest station.  
+  # @!attribute [r] google_map_url
+  #   @return [String] the url of Google Map.
+  # @!attribute [rw] lat
+  #   @return the latitude.
+  # @!attribute [rw] lon
+  #   @return the longitude.
   class Place
     attr_reader :address, :near_station, :google_map_url
     attr_accessor :lat, :lon
@@ -38,7 +49,6 @@ module Machiawase
       {"lat" => lat, "lon" => lon}
     end
     
-    # @return [String] the address.
     def address
       begin
         @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}"))
@@ -48,7 +58,6 @@ module Machiawase
       end
     end
 
-    # @return [String] the nearest station.
     def near_station
       begin
         @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}"))
