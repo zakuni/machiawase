@@ -42,7 +42,8 @@ module Machiawase
       address  = URI.encode(address)
       baseUrl  = "http://maps.google.com/maps/api/geocode/json"
       reqUrl   = "#{baseUrl}?address=#{address}&sensor=false&language=ja"
-      response = Net::HTTP.get_response(URI.parse(reqUrl))
+      proxy_host, proxy_port = (ENV["http_proxy"] || '').sub(/http:\/\//, '').split(':')
+      response = Net::HTTP::Proxy(proxy_host, proxy_port).get_response(URI.parse(reqUrl))
       status   = JSON.parse(response.body)
       lat      = status['results'][0]['geometry']['location']['lat']
       lon      = status['results'][0]['geometry']['location']['lng']
@@ -51,7 +52,7 @@ module Machiawase
     
     def address
       begin
-        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}"))
+        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy => ENV['http_proxy']))
         @address ||= @doc.xpath('//address')[0].content
       rescue
         "Service Temporary Unavailable"
@@ -60,7 +61,7 @@ module Machiawase
 
     def near_station
       begin
-        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}"))
+        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}" :proxy => ENV['http_proxy']))
         @near_station ||= @doc.xpath('//station1')[0].content
       rescue
         "Service Temporary Unavailable"
