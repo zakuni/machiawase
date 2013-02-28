@@ -61,7 +61,7 @@ module Machiawase
 
     def near_station
       begin
-        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}" :proxy => ENV['http_proxy']))
+        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy => ENV['http_proxy']))
         @near_station ||= @doc.xpath('//station1')[0].content
       rescue
         "Service Temporary Unavailable"
