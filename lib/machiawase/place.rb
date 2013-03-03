@@ -42,7 +42,7 @@ module Machiawase
       address  = URI.encode(address)
       baseUrl  = "http://maps.google.com/maps/api/geocode/json"
       reqUrl   = "#{baseUrl}?address=#{address}&sensor=false&language=ja"
-      server, account = (ENV["http_proxy" || '').sub(/http:\/\//, '').reverse.split("@", 2).map {|var| var.reverse}.map {|val| val.split(":")}
+      server, account = (ENV["http_proxy"] || '').sub(/http:\/\//, '').reverse.split("@", 2).map {|var| var.reverse}.map {|val| val.split(":")}
       proxy_host, proxy_port = server
       user, pass = account
       response = Net::HTTP::Proxy(proxy_host, proxy_port, user, pass).get_response(URI.parse(reqUrl))

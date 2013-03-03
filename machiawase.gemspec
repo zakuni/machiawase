@@ -16,8 +16,8 @@ Gem::Specification.new do |gem|
   gem.version       = Machiawase::VERSION
 
   gem.add_dependency "nokogiri"
-  gem.add_development_dependency "rspec"
-  gem.add_development_dependency "ZenTest"
-  gem.add_development_dependency "autotest-fsevent"
-  gem.add_development_dependency "autotest-growl"
+  gem.add_development_dependency "guard-minitest"
+  gem.add_development_dependency "rb-fsevent"
+  gem.add_development_dependency "minitest-reporters"
+  gem.add_development_dependency "growl"
 end
