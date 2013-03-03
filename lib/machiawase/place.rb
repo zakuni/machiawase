@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Machiawase
 
   # @!attribute [r] address
@@ -21,6 +22,7 @@ module Machiawase
       @address        = nil
       @near_station   = nil
       @google_map_url = "http://maps.google.co.jp/maps?q=#{@lat},#{@lon}&ll=#{@lat},#{@lon}&z=14&t=m&brcurrent=3,0x0:0x0,1"
+      @proxy          = Place.parse_proxy(ENV["http_proxy"])
     end
 
     def lat=(val)
@@ -42,19 +44,36 @@ module Machiawase
       address  = URI.encode(address)
       baseUrl  = "http://maps.google.com/maps/api/geocode/json"
       reqUrl   = "#{baseUrl}?address=#{address}&sensor=false&language=ja"
-      server, account = (ENV["http_proxy"] || '').sub(/http:\/\//, '').reverse.split("@", 2).map {|var| var.reverse}.map {|val| val.split(":")}
-      proxy_host, proxy_port = server
-      user, pass = account
-      response = Net::HTTP::Proxy(proxy_host, proxy_port, user, pass).get_response(URI.parse(reqUrl))
+      proxy    = parse_proxy(ENV["http_proxy"])
+      response = Net::HTTP::Proxy(proxy['host'], proxy['port'], proxy['user'], proxy['pass']).get_response(URI.parse(reqUrl))
       status   = JSON.parse(response.body)
       lat      = status['results'][0]['geometry']['location']['lat']
       lon      = status['results'][0]['geometry']['location']['lng']
       {"lat" => lat, "lon" => lon}
     end
-    
+
+    def self.parse_proxy(proxy)
+      # http://user:pass@host:port のように書かれていることを想定
+      # パスワードに@とか入ってる場合があるので一番後ろの@でだけsplitする
+      rserver, raccount = (proxy || '').sub(/http:\/\//, '').reverse.split("@", 2)
+      server  = rserver.nil? ? "" : rserver.reverse
+      host, port = server.split(":")
+      account = raccount.nil? ? "" : raccount.reverse.split(":")
+      user, pass = account
+      
+      # serverはNokogiri(open-uri)で使う。host, portはNet::HTTPで使う。
+      {
+        "server" => server.empty? ? nil : "http://#{server}",
+        "host"   => host,
+        "port"   => port,
+        "user"   => user.nil? ? "" : user,
+        "pass"   => pass.nil? ? "" : pass
+      }
+    end
+
     def address
       begin
-        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy => ENV['http_proxy']))
+        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy_http_basic_authentication => [@proxy['server'], @proxy['user'], @proxy['pass']]))
         @address ||= @doc.xpath('//address')[0].content
       rescue
         "Service Temporary Unavailable"
