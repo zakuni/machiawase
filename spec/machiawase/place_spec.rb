@@ -1,10 +1,6 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'machiawase'
-
-MiniTest::Reporters.use! [MiniTest::Reporters::SpecReporter.new]
+require 'spec_helper'
 
 describe Machiawase::Place do
   describe ':address' do
