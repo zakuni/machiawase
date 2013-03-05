@@ -17,6 +17,7 @@ Or install it yourself as:
     $ gem install machiawase
 
 ## Usage
+### As a Command
 
     $ machiawase PLACE_A PLACE_B
     
@@ -27,6 +28,10 @@ e.g.
 or
     
     $ machiawase 横浜 東京 川崎
+
+### As a Library
+
+see <http://rubydoc.info/gems/machiawase>
 
 ## Contributing
 
