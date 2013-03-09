@@ -62,10 +62,10 @@ module Machiawase
       user, pass = account
       
       proxy = OpenStruct.new({      
-        "server" => server.empty? ? nil : "http://#{server}",
-        "user"   => user.nil? ? "" : user,
-        "pass"   => pass.nil? ? "" : pass
-      })
+                               "server" => server.empty? ? nil : "http://#{server}",
+                               "user"   => user.nil? ? "" : user,
+                               "pass"   => pass.nil? ? "" : pass
+                             })
     end
 
     def address

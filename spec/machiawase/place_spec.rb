@@ -39,23 +39,19 @@ describe Machiawase::Place do
     end
 
     it 'returns correct OpenStruct with "user:pass@host:port"' do
-      Machiawase::Place.parse_proxy(
-                                    "user:pass@host:port"
-                                    ).must_equal(OpenStruct.new({
-                                                   "server" => "http://host:port",
-                                                   "user"   => "user",
-                                                   "pass"   => "pass"
-                                                 }))
+      Machiawase::Place.parse_proxy("user:pass@host:port").must_equal(OpenStruct.new({
+                                                                                       "server" => "http://host:port",
+                                                                                       "user"   => "user",
+                                                                                       "pass"   => "pass"
+                                                                                     }))
     end
 
     it 'returns correct OpenStruct with "host:port"' do
-      Machiawase::Place.parse_proxy(
-                                    "host:port"
-                                    ).must_equal(OpenStruct.new({
-                                                   "server" => "http://host:port",
-
-                                                   "user"   => "",
-                                                   "pass"   => ""
+      Machiawase::Place.parse_proxy("host:port").must_equal(OpenStruct.new({
+                                                                             "server" => "http://host:port",
+                                                                             
+                                                                             "user"   => "",
+                                                                             "pass"   => ""
                                                  }))
     end
 
