@@ -30,14 +30,6 @@ describe Machiawase::Place do
       Machiawase::Place.parse_proxy(nil).must_be_kind_of(Hash)
     end
 
-    it 'includes "host"' do
-      Machiawase::Place.parse_proxy(nil).must_include("host")
-    end
-
-    it 'includes "port"' do
-      Machiawase::Place.parse_proxy(nil).must_include("port")
-    end
-
     it 'includes "user"' do
       Machiawase::Place.parse_proxy(nil).must_include("user")
     end
@@ -51,8 +43,6 @@ describe Machiawase::Place do
                                     "user:pass@host:port"
                                     ).must_equal({
                                                    "server" => "http://host:port",
-                                                   "host"   => "host",
-                                                   "port"   => "port",
                                                    "user"   => "user",
                                                    "pass"   => "pass"
                                                  })
@@ -64,8 +54,6 @@ describe Machiawase::Place do
                                     ).must_equal({
                                                    "server" => "http://host:port",
 
-                                                   "host"   => "host",
-                                                   "port"   => "port",
                                                    "user"   => "",
                                                    "pass"   => ""
                                                  })
@@ -75,8 +63,6 @@ describe Machiawase::Place do
       Machiawase::Place.parse_proxy(nil).must_equal(
                                                     {
                                                       "server" => nil,
-                                                      "host"   => nil,
-                                                      "port"   => nil,
                                                       "user"   => "",
                                                       "pass"   => ""
                                                     })

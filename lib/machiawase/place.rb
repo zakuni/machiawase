@@ -45,8 +45,8 @@ module Machiawase
       baseUrl  = "http://maps.google.com/maps/api/geocode/json"
       reqUrl   = "#{baseUrl}?address=#{address}&sensor=false&language=ja"
       proxy    = parse_proxy(ENV["http_proxy"])
-      response = Net::HTTP::Proxy(proxy['host'], proxy['port'], proxy['user'], proxy['pass']).get_response(URI.parse(reqUrl))
-      status   = JSON.parse(response.body)
+      response = open(URI.parse(reqUrl), :proxy_http_basic_authentication => [proxy['server'], proxy['user'], proxy['pass']])
+      status   = JSON.parse(response.string)
       lat      = status['results'][0]['geometry']['location']['lat']
       lon      = status['results'][0]['geometry']['location']['lng']
       {"lat" => lat, "lon" => lon}
@@ -61,11 +61,8 @@ module Machiawase
       account = raccount.nil? ? "" : raccount.reverse.split(":")
       user, pass = account
       
-      # serverはNokogiri(open-uri)で使う。host, portはNet::HTTPで使う。
       {
         "server" => server.empty? ? nil : "http://#{server}",
-        "host"   => host,
-        "port"   => port,
         "user"   => user.nil? ? "" : user,
         "pass"   => pass.nil? ? "" : pass
       }
