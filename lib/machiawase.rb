@@ -4,6 +4,7 @@ require 'net/http'
 require 'json'
 require 'nokogiri'
 require 'open-uri'
+require 'ostruct'
 require 'machiawase/place'
 require 'machiawase/version'
 

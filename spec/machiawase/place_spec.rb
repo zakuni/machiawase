@@ -26,46 +26,45 @@ describe Machiawase::Place do
       Machiawase::Place.must_respond_to("parse_proxy")
     end
     
-    it 'returns Hash' do
-      Machiawase::Place.parse_proxy(nil).must_be_kind_of(Hash)
+    it 'returns OpenStruct' do
+      Machiawase::Place.parse_proxy(nil).must_be_kind_of(OpenStruct)
     end
 
-    it 'includes "user"' do
-      Machiawase::Place.parse_proxy(nil).must_include("user")
+    it 'has "user"' do
+      Machiawase::Place.parse_proxy(nil).must_respond_to("user")
     end
 
-    it 'includes "pass"' do
-      Machiawase::Place.parse_proxy(nil).must_include("pass")
+    it 'has "pass"' do
+      Machiawase::Place.parse_proxy(nil).must_respond_to("pass")
     end
 
-    it 'returns correct hash with "user:pass@host:port"' do
+    it 'returns correct OpenStruct with "user:pass@host:port"' do
       Machiawase::Place.parse_proxy(
                                     "user:pass@host:port"
-                                    ).must_equal({
+                                    ).must_equal(OpenStruct.new({
                                                    "server" => "http://host:port",
                                                    "user"   => "user",
                                                    "pass"   => "pass"
-                                                 })
+                                                 }))
     end
 
-    it 'returns correct hash with "host:port"' do
+    it 'returns correct OpenStruct with "host:port"' do
       Machiawase::Place.parse_proxy(
                                     "host:port"
-                                    ).must_equal({
+                                    ).must_equal(OpenStruct.new({
                                                    "server" => "http://host:port",
 
                                                    "user"   => "",
                                                    "pass"   => ""
-                                                 })
+                                                 }))
     end
 
-    it 'returns correct hash with nil' do
-      Machiawase::Place.parse_proxy(nil).must_equal(
-                                                    {
+    it 'returns correct OpenStruct with nil' do
+      Machiawase::Place.parse_proxy(nil).must_equal(OpenStruct.new({
                                                       "server" => nil,
                                                       "user"   => "",
                                                       "pass"   => ""
-                                                    })
+                                                    }))
     end
   end
 end
