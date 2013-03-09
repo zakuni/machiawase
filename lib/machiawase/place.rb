@@ -69,21 +69,17 @@ module Machiawase
     end
 
     def address
-      begin
-        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy_http_basic_authentication => [@proxy.server, @proxy.user, @proxy.pass]))
-        @address ||= @doc.xpath('//address')[0].content
-      rescue
-        "Service Temporary Unavailable"
-      end
+      @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy_http_basic_authentication => [@proxy.server, @proxy.user, @proxy.pass]))
+      @address ||= @doc.xpath('//address')[0].content
+    rescue => exc
+      p exc
     end
 
     def near_station
-      begin
-        @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy_http_basic_authentication => [@proxy.server, @proxy.user, @proxy.pass]))
-        @near_station ||= @doc.xpath('//station1')[0].content
-      rescue
-        "Service Temporary Unavailable"
-      end
+      @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy_http_basic_authentication => [@proxy.server, @proxy.user, @proxy.pass]))
+      @near_station ||= @doc.xpath('//station1')[0].content
+    rescue => exc
+      p exc
     end
     
     # @return [Hash] attributes with Hash format.
