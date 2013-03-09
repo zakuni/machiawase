@@ -2,5 +2,40 @@
 # -*- coding: utf-8 -*-
 require 'rubygems'
 require 'machiawase'
+require 'optparse'
+require 'ostruct'
 
-puts Machiawase.where(*ARGV).address
+options = OpenStruct.new
+options.show_all = false
+
+opt_parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: machiawase PLACE1 PLACE2 ... [options]'
+
+  opts.separator ""
+  opts.separator "Specific options:"
+
+  opts.on('-a', '--all', 'Show all informations of the result with JSON format') {
+    options.show_all = true
+  }
+
+  opts.separator ""
+  opts.separator "Common options:"
+
+  # No argument, shows at tail.  This will print an options summary.
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+
+  # Another typical switch to print the version.
+  opts.on_tail("-v", "--version", "Show version") do
+    puts Machiawase::VERSION
+    exit
+  end
+end
+
+places = opt_parser.parse(ARGV)
+result = Machiawase.where(*places)
+puts options.show_all ? result.to_json : result.address
+
+

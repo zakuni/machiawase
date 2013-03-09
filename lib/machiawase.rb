@@ -12,13 +12,7 @@ module Machiawase
 
   # @param argv [Array<Place>] the array of places.
   # @return [Place] the place to rendezvous.
-  def self.where(*argv)
-    require 'optparse'
-    opt = OptionParser.new do |opt|
-      opt.version = VERSION
-    end
-    addresses = opt.parse(argv)
-
+  def self.where(*addresses)
     places = Array.new
     addresses.each do |address|
       g = Place.geocode(address)
