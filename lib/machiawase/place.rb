@@ -41,9 +41,8 @@ module Machiawase
 
     # @return [Hash] geocode of given address.
     def self.geocode(address)
-      address  = URI.encode(address)
       baseUrl  = "http://maps.google.com/maps/api/geocode/json"
-      reqUrl   = "#{baseUrl}?address=#{address}&sensor=false&language=ja"
+      reqUrl   = "#{baseUrl}?address=#{URI.encode(address)}&sensor=false&language=ja"
       proxy    = parse_proxy(ENV["http_proxy"])
       response = open(URI.parse(reqUrl), :proxy_http_basic_authentication => [proxy.server, proxy.user, proxy.pass])
       status   = JSON.parse(response.string)

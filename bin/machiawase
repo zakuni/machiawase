@@ -14,9 +14,9 @@ opt_parser = OptionParser.new do |opts|
   opts.separator ""
   opts.separator "Specific options:"
 
-  opts.on('-a', '--all', 'Show all informations of the result with JSON format') {
+  opts.on('-a', '--all', 'Show all informations of the result with JSON format') do
     options.show_all = true
-  }
+  end
 
   opts.separator ""
   opts.separator "Common options:"
