@@ -58,6 +58,10 @@ module Machiawase
       JSON.pretty_generate(to_h)
     end
 
+    def to_msgpack
+      to_h.to_msgpack
+    end
+
     private
 
     def middle_of(*places)

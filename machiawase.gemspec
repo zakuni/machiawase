@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.version       = Machiawase::VERSION
 
   gem.add_dependency "nokogiri"
+  gem.add_dependency "msgpack"
   gem.add_development_dependency "guard-minitest"
   gem.add_development_dependency "rb-fsevent"
   gem.add_development_dependency "minitest-reporters"

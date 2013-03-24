@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 require 'net/http'
 require 'json'
+require 'msgpack'
 require 'nokogiri'
 require 'open-uri'
 require 'ostruct'
