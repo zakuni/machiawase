@@ -49,6 +49,8 @@ module Machiawase
       lat      = status['results'][0]['geometry']['location']['lat']
       lon      = status['results'][0]['geometry']['location']['lng']
       {"lat" => lat, "lon" => lon}
+    rescue => exc
+      p exc
     end
 
     def self.parse_proxy(proxy)
