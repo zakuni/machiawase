@@ -2,6 +2,8 @@
 
 Provides command line usage and library to get a middle point of plural points.
 
+[![Build Status](https://travis-ci.org/zakuni/machiawase.png)](https://travis-ci.org/zakuni/machiawase)
+
 ## Installation
 
 Add this line to your application's Gemfile:
