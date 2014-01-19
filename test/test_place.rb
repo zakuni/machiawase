@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 require File.expand_path 'test_helper', File.dirname(__FILE__)
 
-class TestPlace < MiniTest::Unit::TestCase
+class TestPlace < MiniTest::Test
   include Machiawase
   
   def test_address
