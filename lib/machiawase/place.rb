@@ -11,7 +11,9 @@ module Machiawase
   #   @return the latitude.
   # @!attribute [rw] lon
   #   @return the longitude.
-  class Place
+  class Place 
+    include Geocoder
+
     attr_reader :address, :near_station, :google_map_url
     attr_accessor :lat, :lon
 
@@ -41,13 +43,7 @@ module Machiawase
 
     # @return [Hash] geocode of given address.
     def self.geocode(address)
-      baseUrl  = "http://maps.google.com/maps/api/geocode/json"
-      reqUrl   = "#{baseUrl}?address=#{URI.encode(address)}&sensor=false&language=ja"
-      proxy    = parse_proxy(ENV["http_proxy"])
-      response = open(URI.parse(reqUrl), :proxy_http_basic_authentication => [proxy.server, proxy.user, proxy.pass])
-      status   = JSON.parse(response.string)
-      lat      = status['results'][0]['geometry']['location']['lat']
-      lon      = status['results'][0]['geometry']['location']['lng']
+      lat, lon = Geocoder.coordinates(address)
       {"lat" => lat, "lon" => lon}
     rescue => exc
       p exc
@@ -70,8 +66,7 @@ module Machiawase
     end
 
     def address
-      @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy_http_basic_authentication => [@proxy.server, @proxy.user, @proxy.pass]))
-      @address ||= @doc.xpath('//address')[0].content
+      @address ||= Geocoder.address([@lat, @lon])
     rescue => exc
       p exc
     end
