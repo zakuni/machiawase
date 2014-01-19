@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Machiawase::VERSION
 
+  gem.add_dependency "geocoder"
   gem.add_dependency "nokogiri"
   gem.add_dependency "msgpack"
   gem.add_development_dependency "bundler", "~> 1.3"
