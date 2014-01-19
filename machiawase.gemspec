@@ -23,5 +23,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rb-fsevent"
   gem.add_development_dependency "minitest-reporters"
   gem.add_development_dependency "growl"
-  gem.add_development_dependency 'rubysl', '~> 2.0' if RUBY_ENGINE == 'rbx'
+  
+  if RUBY_ENGINE == 'rbx'
+    gem.add_development_dependency 'racc'
+    gem.add_development_dependency 'rubysl', '~> 2.0'
+    gem.add_development_dependency 'psych'
+  end
 end
