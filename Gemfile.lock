@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    machiawase (0.6.1)
+    machiawase (0.7.0)
       msgpack
       nokogiri
 
