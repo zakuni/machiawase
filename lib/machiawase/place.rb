@@ -20,7 +20,6 @@ module Machiawase
     def initialize(lat, lon)
       @lat            = lat 
       @lon            = lon 
-      @doc            = nil
       @address        = nil
       @near_station   = nil
       @google_map_url = "http://maps.google.co.jp/maps?q=#{@lat},#{@lon}&ll=#{@lat},#{@lon}&z=14&t=m&brcurrent=3,0x0:0x0,1"
@@ -30,14 +29,12 @@ module Machiawase
 
     def lat=(val)
       @lat          = val
-      @doc          = nil
       @address      = nil
       @near_station = nil
     end
 
     def lon=(val)
       @lon          = val
-      @doc          = nil
       @address      = nil
       @near_station = nil
     end
@@ -82,8 +79,10 @@ module Machiawase
     end
 
     def near_station
-      @doc ||= Nokogiri::HTML(open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}", :proxy_http_basic_authentication => [@proxy.server, @proxy.user, @proxy.pass]))
-      @near_station ||= @doc.xpath('//station1')[0].content
+      @near_station ||= Nokogiri::HTML(
+        open("http://geocode.didit.jp/reverse/?lat=#{@lat}&lon=#{@lon}",
+        :proxy_http_basic_authentication => [@proxy.server, @proxy.user, @proxy.pass]
+      )).xpath('//station1')[0].content
     rescue => exc
       p exc
     end
