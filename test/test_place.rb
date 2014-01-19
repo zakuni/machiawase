@@ -6,7 +6,7 @@ class TestPlace < MiniTest::Test
   include Machiawase
   
   def test_address
-    assert_equal "神奈川県横浜市中区真砂町1丁目9", Place.new(35.4437078, 139.6380256).address
+    assert_equal "日本, 神奈川県横浜市中区真砂町１丁目１", Place.new(35.4437078, 139.6380256).address
   end
 
   def test_geocode
