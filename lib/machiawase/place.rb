@@ -25,6 +25,7 @@ module Machiawase
       @near_station   = nil
       @google_map_url = "http://maps.google.co.jp/maps?q=#{@lat},#{@lon}&ll=#{@lat},#{@lon}&z=14&t=m&brcurrent=3,0x0:0x0,1"
       @proxy          = Place.parse_proxy(ENV["http_proxy"])
+      Place.configure      
     end
 
     def lat=(val)
@@ -43,10 +44,18 @@ module Machiawase
 
     # @return [Hash] geocode of given address.
     def self.geocode(address)
+      Place.configure
       lat, lon = Geocoder.coordinates(address)
       {"lat" => lat, "lon" => lon}
     rescue => exc
       p exc
+    end
+
+    def self.configure
+      Geocoder.configure(
+        :language => :ja,
+        :http_proxy => ENV["http_proxy"]
+      )
     end
 
     def self.parse_proxy(proxy)
@@ -66,6 +75,7 @@ module Machiawase
     end
 
     def address
+      Place.configure
       @address ||= Geocoder.address([@lat, @lon])
     rescue => exc
       p exc
