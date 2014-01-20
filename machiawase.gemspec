@@ -26,8 +26,9 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "growl"
   
   if RUBY_ENGINE == 'rbx'
-    gem.add_development_dependency 'racc'
-    gem.add_development_dependency 'rubysl', '~> 2.0'
-    gem.add_development_dependency 'psych'
+    gem.add_dependency 'racc'
+    gem.add_dependency 'rubysl', '~> 2.0'
+    gem.add_dependency 'psych'
+    gem.add_dependency 'json', '~> 1.8'
   end
 end
