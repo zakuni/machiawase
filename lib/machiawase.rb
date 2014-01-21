@@ -25,4 +25,20 @@ module Machiawase
     m = Rendezvous.new(*places)
     m.place
   end
+
+  def self.parse_proxy(proxy)
+    # http://user:pass@host:port のように書かれていることを想定
+    # パスワードに@とか入ってる場合があるので一番後ろの@でだけsplitする
+    rserver, raccount = (proxy || '').sub(/http:\/\//, '').reverse.split("@", 2)
+    server  = rserver.nil? ? "" : rserver.reverse
+    host, port = server.split(":")
+    account = raccount.nil? ? "" : raccount.reverse.split(":")
+    user, pass = account
+    
+    proxy = OpenStruct.new({      
+                             "server" => server.empty? ? nil : "http://#{server}",
+                             "user"   => user.nil? ? "" : user,
+                             "pass"   => pass.nil? ? "" : pass
+                           })
+  end  
 end

@@ -23,7 +23,7 @@ module Machiawase
       @address        = nil
       @near_station   = nil
       @google_map_url = "http://maps.google.co.jp/maps?q=#{@lat},#{@lon}&ll=#{@lat},#{@lon}&z=14&t=m&brcurrent=3,0x0:0x0,1"
-      @proxy          = Place.parse_proxy(ENV["http_proxy"])
+      @proxy          = Machiawase.parse_proxy(ENV["http_proxy"])
       Place.configure      
     end
 
@@ -53,22 +53,6 @@ module Machiawase
         :language => :ja,
         :http_proxy => ENV["http_proxy"]
       )
-    end
-
-    def self.parse_proxy(proxy)
-      # http://user:pass@host:port のように書かれていることを想定
-      # パスワードに@とか入ってる場合があるので一番後ろの@でだけsplitする
-      rserver, raccount = (proxy || '').sub(/http:\/\//, '').reverse.split("@", 2)
-      server  = rserver.nil? ? "" : rserver.reverse
-      host, port = server.split(":")
-      account = raccount.nil? ? "" : raccount.reverse.split(":")
-      user, pass = account
-      
-      proxy = OpenStruct.new({      
-                               "server" => server.empty? ? nil : "http://#{server}",
-                               "user"   => user.nil? ? "" : user,
-                               "pass"   => pass.nil? ? "" : pass
-                             })
     end
 
     def address
