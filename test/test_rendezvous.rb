@@ -9,6 +9,14 @@ class TestRendezvous < MiniTest::Test
     @rendezvous = Rendezvous.new
   end
 
+  def test_places
+    assert_kind_of Array, @rendezvous.places
+  end
+
+  def test_place
+    assert_kind_of Place, @rendezvous.place
+  end
+
   def test_centroid
     place_a = Place.new(0, 0)
     place_b = Place.new(1, 1)
