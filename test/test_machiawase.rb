@@ -5,6 +5,7 @@ require File.expand_path 'test_helper', File.dirname(__FILE__)
 class TestMachiawase < MiniTest::Test
   def test_where
     assert_kind_of Machiawase::Place, Machiawase.where("横浜", "東京")
+    assert_equal "日本, 神奈川県川崎市中原区市ノ坪３５９", Machiawase.where("横浜", "東京").address
   end
 
   def test_parse_proxy
