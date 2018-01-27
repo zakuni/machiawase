@@ -5,7 +5,7 @@ require File.expand_path 'test_helper', File.dirname(__FILE__)
 class TestMachiawase < MiniTest::Test
   def test_where
     assert_kind_of Machiawase::Place, Machiawase.where("横浜", "東京")
-    assert_equal "日本, 神奈川県川崎市中原区市ノ坪３５９", Machiawase.where("横浜", "東京").address
+    assert_equal "日本、〒146-0084 東京都大田区南久が原２丁目２０−１０", Machiawase.where("横浜", "東京").address
   end
 
   def test_parse_proxy
@@ -20,7 +20,7 @@ class TestMachiawase < MiniTest::Test
                                   "user" => "user",
                                   "pass" => "pass"}),
                  Machiawase.parse_proxy("user:pass@host:port"))
-    
+
     assert_equal(OpenStruct.new({"server" => "http://host:port",
                                   "user"   => "",
                                   "pass"   => ""}),
@@ -30,5 +30,5 @@ class TestMachiawase < MiniTest::Test
                                   "user"   => "",
                                   "pass"   => ""}),
                  Machiawase.parse_proxy(nil))
-  end  
+  end
 end
