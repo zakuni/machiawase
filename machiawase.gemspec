@@ -18,13 +18,14 @@ Gem::Specification.new do |gem|
   gem.add_dependency "geocoder"
   gem.add_dependency "nokogiri"
   gem.add_dependency "msgpack"
-  gem.add_development_dependency "bundler", "~> 1.3"
+  gem.add_development_dependency "bundler"
   gem.add_development_dependency "rake"
+  gem.add_development_dependency "guard"
   gem.add_development_dependency "guard-minitest"
   gem.add_development_dependency "rb-fsevent"
   gem.add_development_dependency "minitest-reporters"
   gem.add_development_dependency "growl"
-  
+
   if RUBY_ENGINE == 'rbx'
     gem.add_dependency 'racc'
     gem.add_dependency 'rubysl', '~> 2.0'
