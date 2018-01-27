@@ -16,10 +16,6 @@ class TestPlace < MiniTest::Test
     assert_equal({"lat" => nil, "lon" => nil}, Place.geocode(nil))
   end
 
-  def test_near_station
-    assert_equal "関内駅", Place.new(35.4437978, 139.6380256).near_station
-  end
-
   def test_to_h
     assert_kind_of Hash, Place.new(0, 0).to_h
   end
