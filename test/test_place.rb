@@ -4,10 +4,10 @@ require File.expand_path 'test_helper', File.dirname(__FILE__)
 
 class TestPlace < MiniTest::Test
   include Machiawase
-  
+
   def test_address
-    assert_equal "日本, 神奈川県横浜市中区真砂町１丁目１", Place.new(35.4437078, 139.6380256).address
-    assert_equal nil, Place.new(nil, nil).address
+    assert_equal "日本、神奈川県横浜市 横浜市庁舎横浜市役所", Place.new(35.4437078, 139.6380256).address
+    assert_nil Place.new(nil, nil).address
   end
 
   def test_geocode
