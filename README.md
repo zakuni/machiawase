@@ -22,13 +22,13 @@ Or install it yourself as:
 ### As a Command
 
     $ machiawase PLACE_A PLACE_B
-    
+
 e.g.
 
     $ machiawase London Berlin
-    
+
 or
-    
+
     $ machiawase 横浜 東京 川崎
 
 ### As a Library
@@ -42,5 +42,3 @@ see <http://rubydoc.info/gems/machiawase>
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
-[![endorse](http://api.coderwall.com/zakuni/endorsecount.png)](http://coderwall.com/zakuni)
