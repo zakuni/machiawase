@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{provides command line usage and library to get a middle point of plural points}
   gem.summary       = %q{finds a middle point of plural points}
   gem.homepage      = "http://zakuni.github.com/machiawase/"
+  gem.licenses      =['MIT']
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -15,9 +16,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Machiawase::VERSION
 
-  gem.add_dependency "geocoder"
-  gem.add_dependency "nokogiri"
-  gem.add_dependency "msgpack"
+  gem.add_dependency "geocoder", '~> 1.4'
+  gem.add_dependency "nokogiri", '~> 1.8'
+  gem.add_dependency "msgpack", '~> 1.2'
   gem.add_development_dependency "bundler"
   gem.add_development_dependency "rake"
   gem.add_development_dependency "guard"
